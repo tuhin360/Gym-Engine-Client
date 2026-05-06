@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/Shared/navbar";
+import { Footer } from "@/components/Shared/footer";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <main className="flex-grow pt-20">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
