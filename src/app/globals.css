@@ -127,4 +127,14 @@
   html {
     @apply font-sans;
   }
+  
+  /* Global Cursor Pointer for Interactive Elements */
+  a, 
+  button, 
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    cursor: pointer;
+  }
 }

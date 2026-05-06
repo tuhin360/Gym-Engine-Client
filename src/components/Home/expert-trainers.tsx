@@ -40,7 +40,7 @@ export function ExpertTrainers() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {trainers.map((trainer, index) => (
-            <div key={index} className="bg-white rounded-md shadow-[0_0_15px_rgba(0,0,0,0.1)] p-8 flex flex-col group transition-transform duration-300 hover:-translate-y-2">
+            <div key={index} className="bg-white rounded-md shadow-[0_0_15px_rgba(0,0,0,0.1)] p-8 flex flex-col group transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
               <div className="relative w-full aspect-[4/3] rounded-md overflow-hidden mb-6">
                 <Image
                   src={trainer.image}
