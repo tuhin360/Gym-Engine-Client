@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { RegisterForm } from "@/components/Auth/register-form";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Register",
+  description: "Join the GYM ENGINE community and start your journey towards a healthier life.",
+};
 
 export default function RegisterPage() {
   return (

@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { LoginForm } from "@/components/Auth/login-form";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Login to your GYM ENGINE account to access your personalized training dashboard.",
+};
 
 export default function LoginPage() {
   return (

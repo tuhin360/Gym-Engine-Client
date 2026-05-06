@@ -12,8 +12,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "GYM ENGINE",
-  description: "Your ultimate fitness destination",
+  title: {
+    template: "%s | GYM ENGINE",
+    default: "GYM ENGINE - Your Ultimate Fitness Destination",
+  },
+  description: "Join GYM ENGINE today and transform your body, mind, and soul with our expert trainers and modern equipment.",
+  keywords: ["Gym", "Fitness", "Training", "Bodybuilding", "Yoga", "Schedules", "Expert Trainers"],
 };
 
 export default function RootLayout({
