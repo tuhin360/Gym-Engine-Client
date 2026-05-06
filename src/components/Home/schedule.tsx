@@ -8,27 +8,27 @@ const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 const scheduleData = [
   { 
     name: "Fitness Class", 
-    trainer: "William G. Stewart", 
+    trainer: "Alex Thompson", 
     schedules: { Monday: "10:00AM - 11:30AM", Tuesday: "", Wednesday: "", Thursday: "2:00PM - 3:30PM", Friday: "" } 
   },
   { 
     name: "Muscle Training", 
-    trainer: "Paul D. Newman", 
+    trainer: "Sarah Jenkins", 
     schedules: { Monday: "", Tuesday: "10:00AM - 11:30AM", Wednesday: "", Thursday: "", Friday: "10:00AM - 11:30AM" } 
   },
   { 
     name: "Body Building", 
-    trainer: "Boyd C. Harris", 
+    trainer: "Marcus Chen", 
     schedules: { Monday: "2:00PM - 3:30PM", Tuesday: "", Wednesday: "10:00AM - 11:30AM", Thursday: "", Friday: "" } 
   },
   { 
     name: "Yoga Training Class", 
-    trainer: "Hector T. Daigle", 
+    trainer: "Sarah Jenkins", 
     schedules: { Monday: "", Tuesday: "2:00PM - 3:30PM", Wednesday: "", Thursday: "10:00AM - 11:30AM", Friday: "2:00PM - 3:30PM" } 
   },
   { 
     name: "Advanced Training", 
-    trainer: "Bret D. Bowers", 
+    trainer: "Alex Thompson", 
     schedules: { Monday: "", Tuesday: "", Wednesday: "2:00PM - 3:30PM", Thursday: "", Friday: "" } 
   },
 ];
@@ -56,7 +56,7 @@ export function Schedule() {
             <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
           </div>
           <p className="text-zinc-300 text-lg">
-            Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum massa consequat eu.
+            Find the perfect time to crush your goals. Our schedule is designed to fit your busy lifestyle with sessions throughout the day.
           </p>
         </div>
 

@@ -41,7 +41,7 @@ export function OurClasses() {
             <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
           </div>
           <p className="text-gray-500 text-lg">
-            Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum massa consequat eu.
+            Experience variety in your fitness journey. From high-intensity training to soul-soothing yoga, we offer a wide range of classes to keep you motivated and moving.
           </p>
         </div>
 
