@@ -53,9 +53,11 @@ export function Navbar() {
         {/* Desktop Action Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white border-none font-bold px-6 h-11 rounded-lg shadow-lg shadow-orange-500/20">
-            Sign Up
-          </Button>
+          <Link href="/login">
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white border-none font-bold px-8 h-11 rounded-lg shadow-lg shadow-orange-500/20">
+              Login
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Controls */}
@@ -94,9 +96,13 @@ export function Navbar() {
             </Link>
           );
         })}
-        <Button onClick={closeMobileMenu} className="bg-orange-500 hover:bg-orange-600 text-white border-none w-3/4 max-w-sm mt-8 text-xl py-8 font-black rounded-2xl shadow-xl shadow-orange-500/20">
-          Sign Up
-        </Button>
+        <div className="flex flex-col items-center gap-4 w-full px-8">
+          <Link href="/login" onClick={closeMobileMenu} className="w-full max-w-sm">
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white border-none w-full text-xl py-8 font-black rounded-2xl shadow-xl shadow-orange-500/20">
+              Login
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );
