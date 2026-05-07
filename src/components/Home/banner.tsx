@@ -28,12 +28,16 @@ export function Banner() {
           Join GYM ENGINE today and transform your body, mind, and soul. We offer the best equipment, expert trainers, and a community that pushes you to be your best.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 h-14 w-full sm:w-auto shadow-lg shadow-orange-500/30">
-            Start Your Journey
-          </Button>
-          <Button size="lg" variant="outline" className="border-2 border-white/80 bg-transparent hover:bg-white hover:text-black text-white font-semibold text-lg px-8 h-14 w-full sm:w-auto backdrop-blur-sm transition-all duration-300">
-            View Classes
-          </Button>
+          <Link href="/register">
+            <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 h-14 w-full sm:w-auto shadow-lg shadow-orange-500/30">
+              Start Your Journey
+            </Button>
+          </Link>
+          <Link href="/classes">
+            <Button size="lg" variant="outline" className="border-2 border-white/80 bg-transparent hover:bg-white hover:text-black text-white font-semibold text-lg px-8 h-14 w-full sm:w-auto backdrop-blur-sm transition-all duration-300">
+              View Classes
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -2,13 +2,75 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SocialButton } from "./social-button";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 export function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { email: "", password: "" };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+      isValid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Login Successful!");
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error: any) {
+      toast.error("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <motion.div
@@ -19,7 +81,7 @@ export function LoginForm() {
     >
       <div className="text-center mb-10">
         <h2 className="text-3xl font-black text-[#232d39] dark:text-white uppercase tracking-tighter mb-2">
-          Welcome <span className="text-orange-500">Back</span>
+          Login <span className="text-orange-500"> Now</span>
         </h2>
         <p className="text-gray-500 dark:text-zinc-400 font-medium">
           Enter your details to access your account
@@ -27,9 +89,10 @@ export function LoginForm() {
       </div>
 
       <div className="space-y-4 mb-8">
-        <SocialButton 
-          icon="https://www.svgrepo.com/show/475656/google-color.svg" 
-          text="Continue with Google" 
+        <SocialButton
+          icon="https://www.svgrepo.com/show/475656/google-color.svg"
+          text="Continue with Google"
+          onClick={() => signIn("google", { callbackUrl: "/" })}
         />
       </div>
 
@@ -42,32 +105,49 @@ export function LoginForm() {
         </div>
       </div>
 
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+        {/* Email */}
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-[#232d39] dark:text-white ml-1">Email Address</label>
           <div className="relative group">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
-            <input 
-              type="email" 
+            <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${errors.email ? 'text-red-500' : 'text-gray-400 group-focus-within:text-orange-500'}`} />
+            <input
+              type="email"
               placeholder="name@example.com"
-              className="w-full h-14 pl-12 pr-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white"
+              value={formData.email}
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+                if (errors.email) setErrors({ ...errors, email: "" });
+              }}
+              className={`w-full h-14 pl-12 pr-6 rounded-2xl border ${errors.email ? 'border-red-500 bg-red-50/10' : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'} focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white`}
             />
           </div>
+          {errors.email && (
+            <p className="flex items-center gap-1 text-xs font-bold text-red-500 ml-2 animate-in fade-in slide-in-from-top-1">
+              <AlertCircle size={14} /> {errors.email}
+            </p>
+          )}
         </div>
 
+        {/* Password */}
         <div className="space-y-2">
           <div className="flex justify-between items-center ml-1">
             <label className="text-xs font-black uppercase tracking-widest text-[#232d39] dark:text-white">Password</label>
             <Link href="#" className="text-xs font-bold text-orange-500 hover:underline">Forgot Password?</Link>
           </div>
           <div className="relative group">
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
-            <input 
+            <Lock className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${errors.password ? 'text-red-500' : 'text-gray-400 group-focus-within:text-orange-500'}`} />
+            <input
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              className="w-full h-14 pl-12 pr-12 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white"
+              value={formData.password}
+              onChange={(e) => {
+                setFormData({ ...formData, password: e.target.value });
+                if (errors.password) setErrors({ ...errors, password: "" });
+              }}
+              className={`w-full h-14 pl-12 pr-12 rounded-2xl border ${errors.password ? 'border-red-500 bg-red-50/10' : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'} focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white`}
             />
-            <button 
+            <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500"
@@ -75,10 +155,26 @@ export function LoginForm() {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+          {errors.password && (
+            <p className="flex items-center gap-1 text-xs font-bold text-red-500 ml-2 animate-in fade-in slide-in-from-top-1">
+              <AlertCircle size={14} /> {errors.password}
+            </p>
+          )}
         </div>
 
-        <Button className="w-full h-14 bg-orange-500 hover:bg-orange-600 text-white font-black text-lg uppercase tracking-wider rounded-2xl shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-1">
-          Login Now
+        <Button 
+          type="submit"
+          disabled={loading}
+          className="w-full h-14 bg-orange-500 hover:bg-orange-600 text-white font-black text-lg uppercase tracking-wider rounded-2xl shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-1 disabled:opacity-70"
+        >
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <Loader2 className="animate-spin" />
+              <span>Logging in...</span>
+            </div>
+          ) : (
+            "Login Now"
+          )}
         </Button>
       </form>
 

@@ -6,7 +6,7 @@ export function ClassCta() {
       {/* Abstract Design Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32 blur-2xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-black/10 rounded-full -ml-24 -mb-24 blur-xl" />
-      
+
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 text-center lg:text-left">
           <div className="max-w-2xl">

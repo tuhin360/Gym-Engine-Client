@@ -53,17 +53,16 @@ export function OurClasses() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex items-center gap-4 p-6 rounded-md shadow-md transition-all duration-300 text-left bg-white ${
-                    activeTab === index 
-                      ? "text-[#ed563b] shadow-lg" 
+                  className={`flex items-center gap-4 p-6 rounded-md shadow-md transition-all duration-300 text-left bg-white ${activeTab === index
+                      ? "text-[#ed563b] shadow-lg"
                       : "text-[#232d39] hover:text-[#ed563b]"
-                  }`}
+                    }`}
                 >
-                  <Image 
-                    src="/assets/tabs-first-icon.png" 
-                    width={32} 
-                    height={32} 
-                    alt="Class Icon" 
+                  <Image
+                    src="/assets/tabs-first-icon.png"
+                    width={32}
+                    height={32}
+                    alt="Class Icon"
                     className="object-contain"
                   />
                   <span className="text-xl font-bold tracking-wide">
@@ -72,7 +71,7 @@ export function OurClasses() {
                 </button>
               ))}
             </div>
-            
+
             <Button className="w-full h-16 text-lg font-bold uppercase tracking-wider bg-[#ed563b] hover:bg-[#d5482e] text-white shadow-md rounded-md mt-2">
               View All Schedules
             </Button>

@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/Shared/navbar";
 import { Footer } from "@/components/Shared/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/components/Providers/auth-provider";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -34,11 +36,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex-grow pt-20">
-            {children}
-          </main>
-          <Footer />
+          <AuthProvider>
+            <Toaster position="top-center" reverseOrder={false} />
+            <Navbar />
+            <main className="flex-grow pt-20">
+              {children}
+            </main>
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
