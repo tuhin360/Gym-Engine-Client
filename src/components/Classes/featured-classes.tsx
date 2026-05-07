@@ -1,24 +1,53 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 
-const featured = [
-  {
-    title: "Elite Bodybuilding",
-    time: "60 Mins",
-    level: "Advanced",
-    image: "/assets/training-image-01.jpg",
-    description: "Focus on maximum muscle growth with elite-level hypertrophy techniques and heavy lifting sessions.",
-  },
-  {
-    title: "HIIT Transformation",
-    time: "45 Mins",
-    level: "Intermediate",
-    image: "/assets/training-image-02.jpg",
-    description: "High-intensity interval training designed to burn maximum fat and improve your athletic endurance.",
-  },
-];
+import { FeaturedClassSkeleton } from "@/components/Skeleton/featured-class-skeleton";
 
 export function FeaturedClasses() {
+  const [featured, setFeatured] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/classes/featured`);
+        if (response.data.success) {
+          setFeatured(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching featured classes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeatured();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-white" id="featured-classes">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[#232d39] uppercase tracking-tight mb-4">
+                Featured <span className="text-orange-500">Classes</span>
+              </h2>
+              <p className="text-gray-500 text-lg">
+                Our most popular sessions designed by experts to give you the most efficient workout experience possible.
+              </p>
+            </div>
+          </div>
+          <FeaturedClassSkeleton />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 bg-white" id="featured-classes">
       <div className="container mx-auto px-4 md:px-6">
@@ -43,6 +72,7 @@ export function FeaturedClasses() {
                 src={item.image}
                 alt={item.title}
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-12">

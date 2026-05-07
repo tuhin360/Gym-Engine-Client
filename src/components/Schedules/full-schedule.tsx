@@ -39,7 +39,7 @@ export function FullSchedule() {
             Full Weekly <span className="text-orange-500">Timetable</span>
           </h2>
           <div className="flex justify-center mb-6">
-            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
+            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" style={{ height: "auto" }} />
           </div>
           <p className="text-gray-500 text-lg">
             Find the perfect session for your level. We offer a variety of times to ensure you can stay consistent with your training goals.

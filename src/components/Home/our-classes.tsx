@@ -38,7 +38,7 @@ export function OurClasses() {
             Our <span className="text-[#ed563b]">Classes</span>
           </h2>
           <div className="flex justify-center mb-6">
-            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
+            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" style={{ height: "auto" }} />
           </div>
           <p className="text-gray-500 text-lg">
             Experience variety in your fitness journey. From high-intensity training to soul-soothing yoga, we offer a wide range of classes to keep you motivated and moving.
@@ -85,6 +85,7 @@ export function OurClasses() {
                   src={classesData[activeTab].image}
                   alt={classesData[activeTab].title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
                   className="object-cover"
                 />
               </div>

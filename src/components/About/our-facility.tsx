@@ -16,7 +16,7 @@ export function OurFacility() {
             Our <span className="text-orange-500">Facility</span>
           </h2>
           <div className="flex justify-center mb-6">
-            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
+            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" style={{ height: "auto" }} />
           </div>
           <p className="text-gray-500 text-lg">
             A state-of-the-art environment designed for focus, energy, and results. Explore the spaces where your transformation happens.
@@ -35,6 +35,7 @@ export function OurFacility() {
                 src={img}
                 alt={`Facility ${index + 1}`}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

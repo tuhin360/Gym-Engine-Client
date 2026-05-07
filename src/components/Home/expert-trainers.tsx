@@ -31,7 +31,7 @@ export function ExpertTrainers() {
             Meet Our <span className="text-[#ed563b]">Expert Trainers</span>
           </h2>
           <div className="flex justify-center mb-6">
-            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
+            <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" style={{ height: "auto" }} />
           </div>
           <p className="text-gray-500 text-lg">
             Our world-class training team is here to guide, motivate, and support you every step of the way. Achieve your fitness peak with personalized expertise.
@@ -46,6 +46,7 @@ export function ExpertTrainers() {
                   src={trainer.image}
                   alt={trainer.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>

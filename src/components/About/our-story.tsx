@@ -10,6 +10,7 @@ export function OurStory() {
               src="/assets/training-image-01.jpg"
               alt="Our Story"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
           </div>
@@ -19,7 +20,7 @@ export function OurStory() {
               Our <span className="text-orange-500">Story</span>
             </h2>
             <div className="mb-6">
-              <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" />
+              <Image src="/assets/line-dec.png" width={45} height={10} alt="Line decoration" style={{ height: "auto" }} />
             </div>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
               Founded in 2015, GYM ENGINE started with a simple vision: to create a space where everyone, regardless of their fitness level, feels empowered to push their limits and achieve their greatness.
