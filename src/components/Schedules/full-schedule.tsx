@@ -1,40 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+
+import { ScheduleSkeleton } from "@/components/Skeleton/schedule-skeleton";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-const scheduleData = [
-  { 
-    name: "Fitness Class", 
-    trainer: "Alex Thompson", 
-    schedules: { Monday: "10:00AM - 11:30AM", Tuesday: "", Wednesday: "", Thursday: "2:00PM - 3:30PM", Friday: "", Saturday: "10:00AM - 11:30AM", Sunday: "" } 
-  },
-  { 
-    name: "Muscle Training", 
-    trainer: "Sarah Jenkins", 
-    schedules: { Monday: "", Tuesday: "10:00AM - 11:30AM", Wednesday: "", Thursday: "", Friday: "10:00AM - 11:30AM", Saturday: "", Sunday: "10:00AM - 11:30AM" } 
-  },
-  { 
-    name: "Body Building", 
-    trainer: "Marcus Chen", 
-    schedules: { Monday: "2:00PM - 3:30PM", Tuesday: "", Wednesday: "10:00AM - 11:30AM", Thursday: "", Friday: "", Saturday: "2:00PM - 3:30PM", Sunday: "" } 
-  },
-  { 
-    name: "Yoga Training Class", 
-    trainer: "Sarah Jenkins", 
-    schedules: { Monday: "", Tuesday: "2:00PM - 3:30PM", Wednesday: "", Thursday: "10:00AM - 11:30AM", Friday: "2:00PM - 3:30PM", Saturday: "", Sunday: "2:00PM - 3:30PM" } 
-  },
-  { 
-    name: "Advanced Training", 
-    trainer: "Alex Thompson", 
-    schedules: { Monday: "", Tuesday: "", Wednesday: "2:00PM - 3:30PM", Thursday: "", Friday: "", Saturday: "4:00PM - 5:30PM", Sunday: "4:00PM - 5:30PM" } 
-  },
-];
-
 export function FullSchedule() {
   const [activeDay, setActiveDay] = useState("Monday");
+  const [scheduleData, setScheduleData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSchedules = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/schedules`);
+        if (response.data.success) {
+          setScheduleData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching schedules:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSchedules();
+  }, []);
 
   return (
     <section className="py-24 bg-white" id="full-schedule">
@@ -69,47 +64,51 @@ export function FullSchedule() {
         </div>
 
         {/* Schedule Grid */}
-        <div className="w-full max-w-5xl mx-auto overflow-hidden rounded-3xl border border-gray-100 shadow-xl shadow-zinc-200/50">
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr className="bg-[#232d39] text-white">
-                <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Class Name</th>
-                <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Time Slot</th>
-                <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Trainer</th>
-                <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {scheduleData.map((row, index) => {
-                const time = row.schedules[activeDay as keyof typeof row.schedules];
-                return (
-                  <tr key={index} className={`border-b border-gray-50 transition-colors hover:bg-zinc-50/50 ${!time && "opacity-40"}`}>
-                    <td className="py-8 px-8">
-                      <span className="text-xl font-bold text-[#232d39]">{row.name}</span>
-                    </td>
-                    <td className="py-8 px-8">
-                      <span className={`text-base font-semibold ${time ? "text-orange-500" : "text-gray-300"}`}>
-                        {time || "No Class Scheduled"}
-                      </span>
-                    </td>
-                    <td className="py-8 px-8">
-                      <span className="text-base font-medium text-gray-500">{row.trainer}</span>
-                    </td>
-                    <td className="py-8 px-8 text-right">
-                      {time ? (
-                        <button className="bg-[#232d39] text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 transition-colors">
-                          Book Now
-                        </button>
-                      ) : (
-                        <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">N/A</span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {loading ? (
+          <ScheduleSkeleton />
+        ) : (
+          <div className="w-full max-w-5xl mx-auto overflow-hidden rounded-3xl border border-gray-100 shadow-xl shadow-zinc-200/50">
+            <table className="w-full border-collapse text-left">
+              <thead>
+                <tr className="bg-[#232d39] text-white">
+                  <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Class Name</th>
+                  <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Time Slot</th>
+                  <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider">Trainer</th>
+                  <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white">
+                {scheduleData.map((row, index) => {
+                  const time = row.schedules[activeDay];
+                  return (
+                    <tr key={index} className={`border-b border-gray-50 transition-colors hover:bg-zinc-50/50 ${!time && "opacity-40"}`}>
+                      <td className="py-8 px-8">
+                        <span className="text-xl font-bold text-[#232d39]">{row.name}</span>
+                      </td>
+                      <td className="py-8 px-8">
+                        <span className={`text-base font-semibold ${time ? "text-orange-500" : "text-gray-300"}`}>
+                          {time || "No Class Scheduled"}
+                        </span>
+                      </td>
+                      <td className="py-8 px-8">
+                        <span className="text-base font-medium text-gray-500">{row.trainer}</span>
+                      </td>
+                      <td className="py-8 px-8 text-right">
+                        {time ? (
+                          <button className="bg-[#232d39] text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 transition-colors">
+                            Book Now
+                          </button>
+                        ) : (
+                          <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">N/A</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </section>
   );
