@@ -220,9 +220,18 @@ export default function ManageUsersPage() {
       )}
 
       {/* Users Table */}
-      <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
+      <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden relative">
+        {/* Mobile Swipe Hint */}
+        <div className="lg:hidden flex items-center justify-center gap-2 py-2 bg-zinc-50 dark:bg-zinc-800 text-[10px] font-black uppercase text-gray-400 tracking-widest border-b border-zinc-100 dark:border-zinc-700">
+          <span>Swipe horizontally to view more</span>
+          <div className="flex gap-1 animate-pulse">
+            <span className="w-1 h-1 bg-orange-500 rounded-full" />
+            <span className="w-1 h-1 bg-orange-500 rounded-full" />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <table className="w-full text-left min-w-[800px] lg:min-w-full">
             <thead>
               <tr className="bg-zinc-50 dark:bg-zinc-800/50 border-b border-zinc-100 dark:border-zinc-800">
                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">

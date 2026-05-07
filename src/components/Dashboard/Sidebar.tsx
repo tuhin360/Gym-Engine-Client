@@ -17,6 +17,7 @@ import {
 
 interface SidebarProps {
   role: 'admin' | 'trainer' | 'member' | 'non-member';
+  isMobile?: boolean;
 }
 
 const roleLinks = {
@@ -46,16 +47,22 @@ const roleLinks = {
   ],
 };
 
-export function Sidebar({ role }: SidebarProps) {
+export function Sidebar({ role, isMobile }: SidebarProps) {
   const pathname = usePathname();
   const links = roleLinks[role] || roleLinks["non-member"];
 
+  const sidebarClasses = isMobile 
+    ? "w-full flex flex-col space-y-2" 
+    : "w-72 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 min-h-[calc(100vh-80px)] hidden lg:flex flex-col p-6 sticky top-20";
+
   return (
-    <aside className="w-72 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 min-h-[calc(100vh-80px)] hidden lg:flex flex-col p-6 sticky top-20">
-      <div className="space-y-2 flex-1">
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest px-4 mb-4">
-          {role} Menu
-        </p>
+    <aside className={sidebarClasses}>
+      <div className={`${!isMobile ? "space-y-2 flex-1" : "space-y-2"}`}>
+        {!isMobile && (
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest px-4 mb-4">
+            {role} Menu
+          </p>
+        )}
         {links.map((link) => {
           const isActive = pathname === link.href;
           const Icon = link.icon;
@@ -80,7 +87,7 @@ export function Sidebar({ role }: SidebarProps) {
         })}
       </div>
 
-      <div className="mt-auto pt-6 border-t border-zinc-200 dark:border-zinc-800">
+      <div className={`${!isMobile ? "mt-auto pt-6 border-t border-zinc-200 dark:border-zinc-800" : "pt-6 mt-6 border-t border-zinc-200 dark:border-zinc-800"}`}>
         <Link
           href="/dashboard/settings"
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-orange-500 transition-all"
