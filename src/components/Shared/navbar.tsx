@@ -25,6 +25,7 @@ export function Navbar() {
     { name: "Classes", href: "/classes" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
+    ...(session ? [{ name: "Dashboard", href: "/dashboard" }] : []),
   ];
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);

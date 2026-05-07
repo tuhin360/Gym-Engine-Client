@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SocialButton } from "./social-button";
-import { Mail, Lock, User, ShieldCheck, Loader2, AlertCircle } from "lucide-react";
+import { Mail, Lock, User, ShieldCheck, Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -14,6 +14,7 @@ import { signIn } from "next-auth/react";
 export function RegisterForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -176,15 +177,22 @@ export function RegisterForm() {
           <div className="relative group">
             <Lock className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${errors.password ? 'text-red-500' : 'text-gray-400 group-focus-within:text-orange-500'}`} />
             <input 
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               value={formData.password}
               onChange={(e) => {
                 setFormData({ ...formData, password: e.target.value });
                 if (errors.password) setErrors({ ...errors, password: "" });
               }}
-              className={`w-full h-14 pl-12 pr-6 rounded-2xl border ${errors.password ? 'border-red-500 bg-red-50/10' : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'} focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white`}
+              className={`w-full h-14 pl-12 pr-12 rounded-2xl border ${errors.password ? 'border-red-500 bg-red-50/10' : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'} focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 transition-all dark:text-white`}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500 transition-colors"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
           </div>
           {errors.password && (
             <p className="flex items-center gap-1 text-xs font-bold text-red-500 ml-2 animate-in fade-in slide-in-from-top-1">
